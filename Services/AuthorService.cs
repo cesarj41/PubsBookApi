@@ -17,7 +17,7 @@ namespace CaribeMediaApi.Services
         {
             _dbContext = dbContext;
         }
-        public Task<List<AuthorDTO>> GetAuthorsByBookSalesAsync(Pagination pagination = null) =>
+        public Task<List<BookDTO>> GetAuthorsTopBooksAsync(Pagination pagination = null) =>
             _dbContext
                 .Authors
                     .AsNoTracking()
@@ -26,7 +26,7 @@ namespace CaribeMediaApi.Services
                     .Where(w => w.Titleauthor.Any(a => a.Title.YtdSales.HasValue))
                     .Paginate(pagination)
                     .OrderBy(by => by.AuId)
-                    .Select(s => s.ToAuthorDTO())
+                    .Select(s => s.GetTopBookDTO())
                     .ToListAsync();
                     
         public Task<List<BookDTO>> GetAuthorBooksByNameAsync(string author, Pagination pagination = null) =>

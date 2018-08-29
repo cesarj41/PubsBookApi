@@ -20,16 +20,16 @@ namespace CaribeMediaApi.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetBookBySales()
+        [HttpGet("books")]
+        public async Task<ActionResult<IEnumerable<BookDTO>>> GetBookBySales()
         {
             _logger.LogInformation("Getting author's books by sales");
-            var books = await _authorService.GetAuthorsByBookSalesAsync();
+            var books = await _authorService.GetAuthorsTopBooksAsync();
             _logger.LogInformation("Books: {@books}", books);
             return Ok(books);
         }
 
-        [HttpGet("{name}")]
+        [HttpGet("{name}/books")]
         public async Task<ActionResult<IEnumerable<BookDTO>>> GetBooksByAuthor(string name)
         {
             _logger.LogInformation("Getting books by author name {name}", name);

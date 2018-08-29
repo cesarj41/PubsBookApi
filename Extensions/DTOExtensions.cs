@@ -18,22 +18,20 @@ namespace CaribeMediaApi.Extensions
         public static BookDTO ToBookDTO(this Titleauthor title) =>
             new BookDTO
             {
+                author = $"{title.Au.AuFname} {title.Au.AuLname}",
                 title = title.Title.Title,
                 type = title.Title.Type,
                 price = title.Title.Price.HasValue ? title.Title.Price.Value : -1,
                 publishedOn = title.Title.Pubdate
             };
         
-        public static AuthorDTO ToAuthorDTO(this Authors author) =>
-            new AuthorDTO
-            {
-                name = $"{author.AuFname} {author.AuLname}",
-                TopBook =
-                    author.Titleauthor
+        public static BookDTO GetTopBookDTO(this Authors author) => 
+                author.Titleauthor
                         .OrderByDescending(by => by.Title.YtdSales)
                         .FirstOrDefault()
-                        .ToBookDTO()
-            };
+                        .ToBookDTO();
+            
+        
        
     }
 }
