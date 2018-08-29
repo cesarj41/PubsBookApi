@@ -31,8 +31,7 @@ namespace CaribeMediaApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
-            services.AddDbContext<PubsContext>(opts => opts.UseSqlServer("Server=localhost;Database=pubs;User Id=SA;Password=Entrada4114;"));
+            services.AddDbContext<PubsContext>(opts => opts.UseSqlServer(Configuration["PubsDb:ConnectionString"]));
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddSwaggerGen(options => options.SwaggerDoc(
                 "v1", new Info { Title = "Caribe Media API", Version = "v1"}
